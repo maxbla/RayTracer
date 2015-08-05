@@ -1,9 +1,10 @@
 #include "Surface.h"
 #include "Eigen/Dense"
+#include "Ray.h"
 
 class Sphere: public Surface {
 public:
-  Vector4d center;
+  Eigen::Vector4d center;
   double radius;
 
   Sphere(Vector4d center, double radius) {
@@ -11,6 +12,6 @@ public:
     this->radius = radius;
   }
 
-  
 
-}
+
+};

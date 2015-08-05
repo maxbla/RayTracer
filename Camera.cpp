@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "simpleImage.h"
 #include "Ray.h"
+using namespace Eigen;
 
 class Camera {
   public:
@@ -26,13 +27,17 @@ class Camera {
       }
 
     Camera(){
-      maxDist = 0f;
+      maxDist = 0.0;
       xRes = 0;
       yRes = 0;
-      xHeight = 0f;
-      yHeight = 0f;
-      distance = 0f;
-      eyepoint = Vector4d(0f,0f,0f,0f);
+      xHeight = 0.0;
+      yHeight = 0.0;
+      distance = 0.0;
+      eyepoint = Vector4d(0.0,0.0,0.0,0.0);
     }
-    ShootRay()
-  }
+
+    Ray ShootRay(int xPixel, int yPixel) {
+      //placeholder return statement
+      return Ray();
+    }
+  };

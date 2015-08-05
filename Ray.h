@@ -2,9 +2,10 @@
 #include <vector>
 #include <algorithm>
 #include "simpleImage.h"
+using namespace Eigen;
 
-
-struct Ray {
+class Ray {
+public:
 
   double start;
   double end;
@@ -19,9 +20,9 @@ struct Ray {
       }
 
   Ray() {
-    start = 0f;
-    end = 1f;
+    start = 0.0;
+    end = 1.0;
     e=Vector4d(0,0,0,0);
     d=Vector4d(0,0,0,0);
   }
-}
+};
