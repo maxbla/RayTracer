@@ -21,20 +21,18 @@ int l2gy (double local){
 
 int main (void) {
 <<<<<<< Updated upstream
-  double maxDist = 10.0f;
+  double maxDist = 10.0;
   int xRes = 500;
   int yRes = 500;
   double xHeight = 1.0f;
   double yHeight = 1.0f;
   double distance = 1.0f;
-  //Vector4d eyepoint = (0.0f,0.0f,-distance);
-  //Camera cam = new Camera(maxDist, xRes, yRes, xHeight, yHeight, distance, eyepoint);
-=======
+
   std::vector<Ray> allRays;
   double start = 0.0;
-  double end = 3f;
+  double end = 3.0;
   double maxDist = 10.0;
-  double distance = 1f;
+  double distance = 1.0;
   Vector4d eyepoint = Vector4d(0.0,0.0,-distance,0.0);
   Camera new = Camera(maxDist, xRes, yRes, xHeight, yHeight, distance, eyepoint);
   for (double localx = 0; localx<xRes; localx++){

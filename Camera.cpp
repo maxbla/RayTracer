@@ -1,7 +1,4 @@
-#include "Eigen/Dense"
-#include <vector>
-#include <algorithm>
-#include "simpleImage.h"
+#include "Camera.h"
 #include "Ray.h"
 using namespace Eigen;
 
