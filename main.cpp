@@ -8,8 +8,8 @@
 
 int xRes = 500;
 int yRes = 500;
-double xHeight = 1f;
-double yHeight = 1f;
+double xHeight = 1.0;
+double yHeight = 1.0;
 
 int l2gx (double local){
   return int(-xHeight + local/xRes);
@@ -20,13 +20,10 @@ int l2gy (double local){
 }
 
 int main (void) {
-<<<<<<< Updated upstream
-  double maxDist = 10.0;
   int xRes = 500;
   int yRes = 500;
-  double xHeight = 1.0f;
-  double yHeight = 1.0f;
-  double distance = 1.0f;
+  double xHeight = 1.0;
+  double yHeight = 1.0;
 
   std::vector<Ray> allRays;
   double start = 0.0;
@@ -34,19 +31,17 @@ int main (void) {
   double maxDist = 10.0;
   double distance = 1.0;
   Vector4d eyepoint = Vector4d(0.0,0.0,-distance,0.0);
-  Camera new = Camera(maxDist, xRes, yRes, xHeight, yHeight, distance, eyepoint);
+  Camera cam(maxDist, xRes, yRes, xHeight, yHeight, distance, eyepoint);
   for (double localx = 0; localx<xRes; localx++){
     for (double localy = 0; localy<yRes; localy++){
-      globalx = l2gx(localx);
-      globaly = l2gy(localy);
+      double globalx = l2gx(localx);
+      double globaly = l2gy(localy);
       Vector4d d = Vector4d(globalx,globaly,0.0,0.0);
       Ray n = Ray(start, end, eyepoint, d);
       allRays.push_back(n);
     }
   }
-  for (std::vector<Ray>::iterator i = allRays.begin(); i!= allRays.end(); ++i){
+  for (std::vector<Ray>::iterator i = allRays.begin(); i!= allRays.end(); i++){
     //get the intersection information
   }
-
->>>>>>> Stashed changes
 }

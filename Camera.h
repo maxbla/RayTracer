@@ -21,5 +21,6 @@ class Camera {
 
     Camera();
 
+    //returns a ray with world coordinates coresponding to pixel coordinates xPixel and yPixel (0,0 in top left)
     Ray ShootRay(int xPixel, int yPixel);
   };

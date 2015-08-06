@@ -6,5 +6,5 @@ class Ray;
 class Surface {
 public:
   RGBColor color;
-  virtual RGBColor intersect(Ray r);
+  virtual double intersect(Ray r);
 };
