@@ -6,42 +6,36 @@
 #include "simpleImage.h"
 #include "Eigen/Dense"
 
-int xRes = 500;
-int yRes = 500;
-double xHeight = 1.0;
-double yHeight = 1.0;
-
-int l2gx (double local){
-  return int(-xHeight + local/xRes);
-}
-
-int l2gy (double local){
-  return int(-yHeight + local/yRes);
-}
 
 int main (void) {
   int xRes = 500;
   int yRes = 500;
   double xHeight = 1.0;
   double yHeight = 1.0;
-
-  std::vector<Ray> allRays;
-  double start = 0.0;
-  double end = 3.0;
   double maxDist = 10.0;
-  double distance = 1.0;
-  Vector4d eyepoint = Vector4d(0.0,0.0,-distance,0.0);
-  Camera cam(maxDist, xRes, yRes, xHeight, yHeight, distance, eyepoint);
-  for (double localx = 0; localx<xRes; localx++){
-    for (double localy = 0; localy<yRes; localy++){
-      double globalx = l2gx(localx);
-      double globaly = l2gy(localy);
-      Vector4d d = Vector4d(globalx,globaly,0.0,0.0);
-      Ray n = Ray(start, end, eyepoint, d);
-      allRays.push_back(n);
+  double sphereDistance = 4.0;
+  double sphereRadius = 2.0;
+  RGBColor sphereColor = RGBColor(0.0,1.0,0.5);
+  RGBColor bgColor = RGBColor(0.2,0.2,0.2);
+  SimpleImage img = SimpleImage(xRes, yRes, bgColor);
+  Eigen::Vector4d sphereCenter = Eigen::Vector4d(0.0,0.0,sphereDistance,0.0);
+  Eigen::Vector4d eyepoint = Eigen::Vector4d(0.0,0.0,-1.0,0.0);
+
+  Sphere _sphere(sphereCenter, sphereRadius, sphereColor);
+  Camera cam(maxDist, xRes, yRes, xHeight, yHeight, eyepoint);
+
+  for (int localx = 0; localx<xRes; localx++){
+    for (int localy = 0; localy<yRes; localy++){
+      Ray n = cam.ShootRay(localx, localy);
+      double result = _sphere.intersect(n);
+      if (result >=0){
+        RGBColor pointCol = _sphere.color;
+        img.set(localx, localy, pointCol);
+      }
     }
   }
-  for (std::vector<Ray>::iterator i = allRays.begin(); i!= allRays.end(); i++){
-    //get the intersection information
-  }
+
+  img.save("output.png");
+
+  return 0;
 }

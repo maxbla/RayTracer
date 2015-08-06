@@ -1,6 +1,6 @@
 #include "Surface.h"
 #include "Eigen/Dense"
-#include "Ray.h"
+//#include "Ray.h"
 #include <math.h>
 
 class Sphere: public Surface {
@@ -13,18 +13,18 @@ public:
   RGBColor color;
 
   Sphere () {
-    c = Vector4d(0.0,0.0,0.0,0.0);
+    c = Eigen::Vector4d(0.0,0.0,0.0,0.0);
     rad = 1.0;
     color = RGBColor(1.0,1.0,1.0);
   }
 
-  Sphere(Vector4d center, double radius){
+  Sphere(Eigen::Vector4d center, double radius){
     c = center;
     rad = radius;
     color = RGBColor(1.0,1.0,1.0);
   }
 
-  Sphere(Vector4d center, double radius, RGBColor color) {
+  Sphere(Eigen::Vector4d center, double radius, RGBColor color) {
     c = center;
     rad = radius;
     this->color = color;
@@ -33,15 +33,17 @@ public:
   /*returns the time value at the intersection of the ray and sphere*/
   double intersect(Ray r) {
     //calculate determinant of intersection equation
-    double det = r.d.dot(r.e-c)*r.d.dot(r.e-c) -
-    (r.d.dot(r.d))*((r.e-c).dot(r.e-c)-rad*rad);
+    std::cout<<(r.d).dot(Eigen::Vector4d(1.0,0.0,0.0,0.0))<<' '<<(r.d).dot(Eigen::Vector4d(0.0,1.0,0.0,0.0))<<' '<<(r.d).dot(Eigen::Vector4d(0.0,0.0,1.0,0.0))<<std::endl;
+    double det = (r.d.dot(r.e-c))*(r.d.dot(r.e-c)) - (r.d.dot(r.d))*((r.e-c).dot(r.e-c)-rad*rad);
+    //det = -det; //debug
+    //std::cout<<det<<std::endl;
     if (det < 0) {
       return -1;
     }
     else { //problem has 2 solutions
-      //solution 1 where t = (-b + sqrt(det))/2a
+      //solution 1 where t = (-b + sqrt(desc))/2a
       double sol1 = (sqrt(det) - r.d.dot(r.e-c))/(r.d.dot(r.d));
-      //solution 2 where t = -(b + sqrt(det))/2a
+      //solution 2 where t = -(b + sqrt(desc))/2a
       double sol2 = -(sqrt(det) + r.d.dot(r.e-c))/(r.d.dot(r.d));
       double closeSol = fmin(sol1,sol2);
 

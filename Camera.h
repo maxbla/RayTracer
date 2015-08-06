@@ -2,9 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include "simpleImage.h"
-using namespace Eigen;
-
-class Ray;
+#include "Ray.h"
 
 class Camera {
   public:
@@ -13,11 +11,14 @@ class Camera {
     int yRes;
     double xHeight;
     double yHeight;
-    double distance;
-    Vector4d eyepoint;
+    Eigen::Vector4d direction;
+    Eigen::Vector4d eyepoint;
 
     Camera(double _maxDist, int _xRes, int _yRes, double _xHeight, double _yHeight,
-      double _distance, Vector4d _eyepoint);
+      Eigen::Vector4d _direction, Eigen::Vector4d _eyepoint);
+
+    Camera(double _maxDist, int _xRes, int _yRes, double _xHeight, double _yHeight,
+      Eigen::Vector4d _eyepoint);
 
     Camera();
 
