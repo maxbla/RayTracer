@@ -15,6 +15,8 @@
         yRes = _yRes;
         xHeight = _xHeight;
         yHeight = _yHeight;
+        //default - up is the upwards direction
+        upDirection = Eigen::Vector4d(0.0,1.0,0.0,0.0);
         direction = _direction;
         eyepoint = _eyepoint;
         maxDist = _maxDist;
@@ -26,6 +28,7 @@
           yRes = _yRes;
           xHeight = _xHeight;
           yHeight = _yHeight;
+          //by default, look along the z axis
           direction = Eigen::Vector4d(0.0,0.0,1.0,0.0);
           eyepoint = _eyepoint;
           maxDist = _maxDist;

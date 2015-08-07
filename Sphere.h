@@ -33,10 +33,10 @@ public:
   /*returns the time value at the intersection of the ray and sphere*/
   double intersect(Ray r) {
     //calculate determinant of intersection equation
-    std::cout<<(r.d).dot(Eigen::Vector4d(1.0,0.0,0.0,0.0))<<' '<<(r.d).dot(Eigen::Vector4d(0.0,1.0,0.0,0.0))<<' '<<(r.d).dot(Eigen::Vector4d(0.0,0.0,1.0,0.0))<<std::endl;
+    /*std::cout<<(r.d).dot(Eigen::Vector4d(1.0,0.0,0.0,0.0))<<' '
+    <<(r.d).dot(Eigen::Vector4d(0.0,1.0,0.0,0.0))<<' '<<(r.d).dot(Eigen::Vector4d(0.0,0.0,1.0,0.0))<<std::endl;*/
     double det = (r.d.dot(r.e-c))*(r.d.dot(r.e-c)) - (r.d.dot(r.d))*((r.e-c).dot(r.e-c)-rad*rad);
-    //det = -det; //debug
-    //std::cout<<det<<std::endl;
+    //std::cout<<det<<std::endl;2
     if (det < 0) {
       return -1;
     }

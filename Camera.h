@@ -11,6 +11,7 @@ class Camera {
     int yRes;
     double xHeight;
     double yHeight;
+    Eigen::Vector4d upDirection;
     Eigen::Vector4d direction;
     Eigen::Vector4d eyepoint;
 

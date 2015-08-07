@@ -8,5 +8,5 @@ public:
   Surface () {
     ;
   };
-  //virtual double intersect(Ray* r) {}
+  virtual double intersect(Ray r) {return -1;}
 };

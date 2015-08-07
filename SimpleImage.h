@@ -73,7 +73,7 @@ class SimpleImage {
 
   // Load image from filename
   void load(const std::string& filename);
-  
+
   // Save image to filename
   bool save(const std::string& filename);
 
