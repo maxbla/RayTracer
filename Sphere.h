@@ -1,5 +1,4 @@
 #include "Surface.h"
-#include "Eigen/Dense"
 //#include "Ray.h"
 #include <math.h>
 
@@ -55,6 +54,13 @@ public:
         return -1;
       }
     }
+  }
+
+  //assuming the given position is on the sphere, finds the normal of the spherea at that point
+  Eigen::Vector4d calcNormal (Eigen::Vector4d position) {
+    Eigen::Vector4d value = position - c;
+    value.normalize();
+    return value;
   }
 
 };

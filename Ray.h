@@ -12,8 +12,9 @@ public:
   Eigen::Vector4d d;
 
   static void normalize(Ray &r) {
-    double factor = sqrt(pow(r.d[0],2)+pow(r.d[1],2)+pow(r.d[2],2)+pow(r.d[3],2));
-    r.d/= factor;
+    //double factor = sqrt(pow(r.d[0],2)+pow(r.d[1],2)+pow(r.d[2],2)+pow(r.d[3],2));
+    //r.d/= factor;
+    r.d.normalize();
   }
 
   void normalize() {
@@ -33,5 +34,14 @@ public:
     end = 1.0;
     e=Eigen::Vector4d(0,0,0,0);
     d=Eigen::Vector4d(0,0,1.0,0);
+  }
+
+  bool isInRange(double t) {
+    if (start<=t && t<=end) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 };

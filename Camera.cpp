@@ -77,7 +77,6 @@
     double yWorld = yPixel*(-yHeight/yRes)+yHeight/2;
     Eigen::Vector4d rayDirection = xWorld*positiveX+yWorld*upDirection+direction;
     //std::cout<<xWorld<<' '<<yWorld<<std::endl;
-    //std::cout<<(eyepoint+direction+Eigen::Vector4d(xWorld,yWorld,0.0,0.0)).dot(Eigen::Vector4d(1.0,0.0,0.0,0.0))<<' '<<(eyepoint+direction+Eigen::Vector4d(xWorld,yWorld,0.0,0.0)).dot(Eigen::Vector4d(0.0,1.0,0.0,0.0))<<' '<<(eyepoint+direction+Eigen::Vector4d(xWorld,yWorld,0.0,0.0)).dot(Eigen::Vector4d(0.0,0.0,1.0,0.0))<<std::endl;
     //std::cout<<direction.dot(Eigen::Vector4d(0,0,1.0,0))<<std::endl;
     return Ray(0,maxDist,eyepoint,rayDirection);
   }
