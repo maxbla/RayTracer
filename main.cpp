@@ -39,26 +39,25 @@ int main (void) {
   Sphere _sphere2(sphereCenter2, sphereRadius, sphereColor2);
   Camera cam(maxDist, xRes, yRes, xHeight, yHeight, eyepoint, viewingDir, upDir);
   std::vector<std::vector<double> > depthBuffer = make2DArray (xRes,yRes,-1.0);
+  Surface* surfaces[10];
+  int surfaceIndex = 0;
+
+  surfaces[surfaceIndex++] = &_sphere1;
+  surfaces[surfaceIndex++] = &_sphere2;
 
   for (int localx = 0; localx<xRes; localx++){
     for (int localy = 0; localy<yRes; localy++){
       Ray n = cam.ShootRay(localx, localy);
-      double result = _sphere1.intersect(n);
-      //result is positive means an intersection has happened
-      // result < delpthBuffer happens when new closer object is drawn in front of old one
-      // delpthBuffer < -.9 happens when the depth buffer was formerly empty (it is initalized to -1.0)
-      if (result >=0 && ((result < depthBuffer[localx][localy]) || (depthBuffer[localx][localy] < -.9))) {
-        RGBColor pointCol = _sphere1.color;
-        img.set(localx, localy, pointCol);
-        depthBuffer[localx][localy] = result;
-      }
-
-
-      result = _sphere2.intersect(n);
-      if (result >=0 && ((result < depthBuffer[localx][localy]) || (depthBuffer[localx][localy] < -.9))) {
-        RGBColor pointCol = _sphere2.color;
-        img.set(localx, localy, pointCol);
-        depthBuffer[localx][localy] = result;
+      for (int i = 0; i<surfaceIndex; i+=1) {
+        //std::cout<<surfaces.at(i).color.r<<' '<<surfaces.at(i).color.g<<' '<<surfaces.at(i).color.b<<std::endl;
+        double result = surfaces[i]->intersect(n);
+        //result is positive means an intersection has happened
+        // result < delpthBuffer happens when new closer object is drawn in front of old one
+        // delpthBuffer < -.9 happens when the depth buffer was formerly empty (it is initalized to -1.0)
+        if (result >=0 && ((result < depthBuffer[localx][localy]) || (depthBuffer[localx][localy] < -.9))) {
+          img.set(localx, localy, surfaces[i]->color);
+          depthBuffer[localx][localy] = result;
+        }
       }
     }
   }

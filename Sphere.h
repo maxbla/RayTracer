@@ -8,8 +8,6 @@ public:
   Eigen::Vector4d c;
   //radius of sphere
   double rad;
-  //color of sphere object
-  RGBColor color;
 
   Sphere () {
     c = Eigen::Vector4d(0.0,0.0,0.0,0.0);
