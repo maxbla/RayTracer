@@ -1,13 +1,9 @@
-#include "Surface.h"
-
 class Plane: public Surface {
-
+public:
   //a single point known to be on the plane
   Eigen::Vector4d pt;
   //the normal vector to the surface of the plane
   Eigen::Vector4d norm;
-  //the color of the plane
-  RGBColor color;
 
   //default constructor
   Plane () {
@@ -29,16 +25,20 @@ class Plane: public Surface {
   }
 
   double intersect (Ray r) {
-    det = norm.dot(r.d);
+    double det = norm.dot(r.d);
+    std::cout<<det<<std::endl;
     if (det == 0.0) {
+      std::cout<<"det == 0"<<std::endl;
       return -1.0;
     }
     else {
       double t = norm.dot(pt-r.e)/det;
       if (r.isInRange(t)) {
+        std::cout<<"t is in range with value "<<t<<std::endl;
         return t;
       }
       else {
+        std::cout<<"t is out of range"<<std::endl;
         return -1;
       }
     }
@@ -47,4 +47,4 @@ class Plane: public Surface {
   Eigen::Vector4d calcNormal (Eigen::Vector4d position) {
     return norm;
   }
-}
+};
