@@ -44,4 +44,8 @@ public:
       return false;
     }
   }
+
+  Eigen::Vector4d pointAt(double t) {
+    return e+t*d;
+  }
 };
