@@ -57,21 +57,24 @@ public:
 
     RGBColor c = this->color*ambientPercent;
 
-    double shadow = 1.0;
-    int numShadowRays = 16;
+    double shadow = 0.0;
+    int numShadowRays = 128;
+    bool inShadow;
     //soft shadow loop
     for(int k = 0; k<numShadowRays; k+=1 ) {
       Eigen::Vector4d intersectionToLight = lights.Sample(numShadowRays,k)-(viewingRay.pointAt(intersectionTime));
       Ray shadowRay(0.01,distToLight,viewingRay.pointAt(intersectionTime),intersectionToLight);
-      for (int i=0; i<surfaces.size(); i+=1) {
+      inShadow = false;
+      for (int i=0; i<surfaces.size() && !inShadow; i+=1) {
         if (surfaces.at(i)->intersect(shadowRay) > -.9 ) {
-          shadow = (shadow+0.0)/(2-k/100);
-        }
-        else {
-          //shadow = (shadow+1.0*(2-k/100))/(2-k/100);
+          inShadow = true;
         }
       }
+      if (!inShadow) {
+        shadow += 1.0;
+      }
     }
+    shadow = shadow/numShadowRays;
     c = c + (this->color)*diffusePercent*diffuseFactor*shadow;
 
     Eigen::Vector4d viewingDirection = -viewingRay.d;
