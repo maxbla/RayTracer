@@ -58,7 +58,7 @@ public:
     RGBColor c = this->color*ambientPercent;
 
     double shadow = 1.0;
-    int numShadowRays = 64;
+    int numShadowRays = 16;
     //soft shadow loop
     for(int k = 0; k<numShadowRays; k+=1 ) {
       Eigen::Vector4d intersectionToLight = lights.Sample(numShadowRays,k)-(viewingRay.pointAt(intersectionTime));

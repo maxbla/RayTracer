@@ -21,8 +21,8 @@ int main (void) {
   clock_t time = clock();
 
   //camera parameters
-  int xRes = 400;
-  int yRes = 400;
+  int xRes = 1000;
+  int yRes = 1000;
   double xHeight = 1.75;
   double yHeight = 1.75;
   double maxDist = 100.0;
