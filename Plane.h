@@ -11,6 +11,9 @@ public:
     norm = Eigen::Vector4d (0.0,0.0,1.0,0.0);
     color = RGBColor(0.9,0.9,0.9);
     shine = 0.0;
+    ambientPercent = 0.2;
+    diffusePercent = 0.8;
+    specularPercent = 0.0;
   }
 
   Plane (Eigen::Vector4d point,Eigen::Vector4d normal) {
@@ -18,6 +21,9 @@ public:
     norm = normal;
     color = RGBColor(0.9,0.9,0.9);
     shine = 0.0;
+    ambientPercent = 0.2;
+    diffusePercent = 0.8;
+    specularPercent = 0.0;
   }
 
   Plane (Eigen::Vector4d point,Eigen::Vector4d normal, RGBColor c) {
@@ -25,6 +31,9 @@ public:
     norm = normal;
     color = c;
     shine = 0.0;
+    ambientPercent = 0.2;
+    diffusePercent = 0.8;
+    specularPercent = 0.0;
   }
 
   double intersect (Ray r) {

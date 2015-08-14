@@ -21,11 +21,11 @@ int main (void) {
   clock_t time = clock();
 
   //camera parameters
-  int xRes = 500;
-  int yRes = 500;
-  double xHeight = 1.5;
-  double yHeight = 1.5;
-  double maxDist = 40.0;
+  int xRes = 400;
+  int yRes = 400;
+  double xHeight = 1.75;
+  double yHeight = 1.75;
+  double maxDist = 100.0;
   Eigen::Vector4d eyepoint = Eigen::Vector4d(0.0,0.0,-1.0,0.0);
   Eigen::Vector4d viewingDir = Eigen::Vector4d(0.0,0.0,1.0,0.0);
   Eigen::Vector4d upDir = Eigen::Vector4d(0.0,1.0,0.0,0.0);
@@ -35,8 +35,8 @@ int main (void) {
   RGBColor sphereColor1 = RGBColor(0.5,1.0,0.5);
   RGBColor sphereColor2 = RGBColor(1.0,0.5,0.5);
   RGBColor bgColor = RGBColor(0.2,0.2,0.2);
-  Eigen::Vector4d sphereCenter1 = Eigen::Vector4d(0.0,1.0,7.0,0.0);
-  Eigen::Vector4d sphereCenter2 = Eigen::Vector4d(4.0,-1.0,7.0,0.0);
+  Eigen::Vector4d sphereCenter1 = Eigen::Vector4d(-2.0,2.0,7.0,0.0);
+  Eigen::Vector4d sphereCenter2 = Eigen::Vector4d(4.0,1.5,7.0,0.0);
   double shine = 0.5;
 
   //plane parameters
@@ -55,7 +55,7 @@ int main (void) {
   Camera cam(maxDist, xRes, yRes, xHeight, yHeight, eyepoint, viewingDir, upDir);
   std::vector<std::vector<double> > depthBuffer = make2DArray (xRes,yRes,-1.0);
   std::vector<Surface*> surfaces;
-  Light light(Eigen::Vector4d(-2.0,5.0,2.0,1.0),RGBColor(1.0,1.0,1.0));
+  AreaLight light(Eigen::Vector4d(-2.0,5.0,2.0,1.0),RGBColor(1.0,1.0,1.0),1.0);
 
   surfaces.push_back(&_sphere1);
   surfaces.push_back(&_sphere2);
@@ -74,7 +74,7 @@ int main (void) {
         if (result >=0 && ((result < depthBuffer[pixelX][pixelY]) || (depthBuffer[pixelX][pixelY] < -.9))) {
           RGBColor imgColor = surfaces[i]->shade(n,result,light,surfaces)*(1.0-surfaces[i]->shine);
           if (surfaces[i]->shine > 0.01)
-          imgColor = imgColor + surfaces[i]->reflect(n,result,light,surfaces,1)*(surfaces[i]->shine);
+            imgColor = imgColor + surfaces[i]->reflect(n,result,light,surfaces,1)*(surfaces[i]->shine);
           img.set(pixelX, pixelY, imgColor);
           depthBuffer[pixelX][pixelY] = result;
         }

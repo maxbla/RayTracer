@@ -14,6 +14,9 @@ public:
     rad = 1.0;
     color = RGBColor(1.0,1.0,1.0);
     shine = 0.0;
+    ambientPercent = 0.2;
+    diffusePercent = 0.5;
+    specularPercent = 0.5;
   }
 
   Sphere(Eigen::Vector4d center, double radius){
@@ -21,6 +24,9 @@ public:
     rad = radius;
     color = RGBColor(1.0,1.0,1.0);
     shine = 0.0;
+    ambientPercent = 0.2;
+    diffusePercent = 0.5;
+    specularPercent = 0.5;
   }
 
   Sphere(Eigen::Vector4d center, double radius, RGBColor color, double shine) {
@@ -28,6 +34,9 @@ public:
     rad = radius;
     this->color = color;
     this->shine = shine;
+    ambientPercent = 0.2;
+    diffusePercent = 0.5;
+    specularPercent = 0.5;
   }
 
   /*returns the time value at the intersection of the ray and sphere*/

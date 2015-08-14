@@ -1,6 +1,6 @@
 #include "SimpleImage.h"
 #include "Eigen/Dense"
-#include "Light.h"
+#include "AreaLight.h"
 
 //forward declaration
 
@@ -8,24 +8,28 @@ class Surface {
 public:
   RGBColor color;
   double shine;
+  float ambientPercent;
+  float diffusePercent;
+  float specularPercent;
   Surface () {
     ;
   };
   virtual double intersect(Ray r) {return -1;}
   virtual Eigen::Vector4d calcNormal(Eigen::Vector4d position) {return (Eigen::Vector4d)NULL;}
 
-  RGBColor reflect(Ray viewingRay, double intersectionTime, Light lights, std::vector<Surface*> surfaces, int reflectDepth) {
+  virtual RGBColor reflect(Ray viewingRay, double intersectionTime, AreaLight lights, std::vector<Surface*> surfaces, int reflectDepth) {
     Eigen::Vector4d normal = this->calcNormal(viewingRay.pointAt(intersectionTime));
     Eigen::Vector4d reflection = viewingRay.d + normal*((-viewingRay.d).dot(normal))*2;
-    Ray reflectionRay = Ray(0.1,100.0, viewingRay.pointAt(intersectionTime),reflection);
+    Ray reflectionRay = Ray(0.01,100.0, viewingRay.pointAt(intersectionTime),reflection);
 
     RGBColor reflectColor;
-    int maxReflectDepth = 1;
+    //int maxReflectDepth = 1;
     double result;
+    double depth;
     for(int i = 0; i<surfaces.size(); i+=1) {
-      double depth = -1.0;
+      depth = -1.0;
       result = surfaces.at(i)->intersect(reflectionRay);
-      if (result>=0.0 && (result < depth || depth < -.9)) {
+      if (result > 0.0 && (result < depth || depth < -.9)) {
         reflectColor = surfaces.at(i)->shade(reflectionRay,result,lights,surfaces);
       }
     }
@@ -41,10 +45,7 @@ public:
     //}
   }
 
-  RGBColor shade (Ray viewingRay, double intersectionTime, Light lights, std::vector<Surface*> surfaces) {
-    float ambientPercent = 0.2;
-    float diffusePercent = 0.7;
-    float specularPercent = 0.5;
+  RGBColor shade (Ray viewingRay, double intersectionTime, AreaLight lights, std::vector<Surface*> surfaces) {
 
     Eigen::Vector4d normal = this->calcNormal(viewingRay.pointAt(intersectionTime));
     Eigen::Vector4d intersectionToLight = lights.location-(viewingRay.pointAt(intersectionTime));
@@ -56,16 +57,22 @@ public:
 
     RGBColor c = this->color*ambientPercent;
 
-    Ray shadowRay(0.01,distToLight,viewingRay.pointAt(intersectionTime),intersectionToLight);
-    bool shadow = false;
-    for (int i=0; i<surfaces.size(); i+=1) {
-      if (surfaces.at(i)->intersect(shadowRay) > -.9 ) {
-        shadow = true;
+    double shadow = 1.0;
+    int numShadowRays = 64;
+    //soft shadow loop
+    for(int k = 0; k<numShadowRays; k+=1 ) {
+      Eigen::Vector4d intersectionToLight = lights.Sample(numShadowRays,k)-(viewingRay.pointAt(intersectionTime));
+      Ray shadowRay(0.01,distToLight,viewingRay.pointAt(intersectionTime),intersectionToLight);
+      for (int i=0; i<surfaces.size(); i+=1) {
+        if (surfaces.at(i)->intersect(shadowRay) > -.9 ) {
+          shadow = (shadow+0.0)/(2-k/100);
+        }
+        else {
+          //shadow = (shadow+1.0*(2-k/100))/(2-k/100);
+        }
       }
     }
-    if (!shadow) {
-      c = c + (this->color)*diffusePercent*diffuseFactor;
-    }
+    c = c + (this->color)*diffusePercent*diffuseFactor*shadow;
 
     Eigen::Vector4d viewingDirection = -viewingRay.d;
     viewingDirection.normalize();
@@ -74,9 +81,7 @@ public:
     reflection.normalize();
     double specularFloat = pow(fmax(0,reflection.dot(intersectionToLight)),20);
 
-    if(!shadow) {
-      c = c + (lights.color*specularPercent*specularFloat);
-    }
+    c = c + (lights.color*specularPercent*specularFloat)*shadow;
 
 
 
