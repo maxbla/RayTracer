@@ -13,18 +13,21 @@ public:
     c = Eigen::Vector4d(0.0,0.0,0.0,0.0);
     rad = 1.0;
     color = RGBColor(1.0,1.0,1.0);
+    shine = 0.0;
   }
 
   Sphere(Eigen::Vector4d center, double radius){
     c = center;
     rad = radius;
     color = RGBColor(1.0,1.0,1.0);
+    shine = 0.0;
   }
 
-  Sphere(Eigen::Vector4d center, double radius, RGBColor color) {
+  Sphere(Eigen::Vector4d center, double radius, RGBColor color, double shine) {
     c = center;
     rad = radius;
     this->color = color;
+    this->shine = shine;
   }
 
   /*returns the time value at the intersection of the ray and sphere*/
