@@ -26,7 +26,7 @@ public:
     //int maxReflectDepth = 1;
     double result;
     double depth;
-    for(int i = 0; i<surfaces.size(); i+=1) {
+    for(size_t i = 0; i<surfaces.size(); i+=1) {
       depth = -1.0;
       result = surfaces.at(i)->intersect(reflectionRay);
       if (result > 0.0 && (result < depth || depth < -.9)) {
@@ -58,14 +58,14 @@ public:
     RGBColor c = this->color*ambientPercent;
 
     double shadow = 0.0;
-    int numShadowRays = 128;
+    int numShadowRays = 16;
     bool inShadow;
     //soft shadow loop
     for(int k = 0; k<numShadowRays; k+=1 ) {
       Eigen::Vector4d intersectionToLight = lights.Sample(numShadowRays,k)-(viewingRay.pointAt(intersectionTime));
       Ray shadowRay(0.01,distToLight,viewingRay.pointAt(intersectionTime),intersectionToLight);
       inShadow = false;
-      for (int i=0; i<surfaces.size() && !inShadow; i+=1) {
+      for (size_t i=0; i<surfaces.size() && !inShadow; i+=1) {
         if (surfaces.at(i)->intersect(shadowRay) > -.9 ) {
           inShadow = true;
         }

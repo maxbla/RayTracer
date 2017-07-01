@@ -1,4 +1,4 @@
-#import "Light.h"
+#include "Light.h"
 #include <stdlib.h> /*used for rand*/
 #include <time.h>
 

@@ -1,7 +1,7 @@
 #include "Eigen/Dense"
 #include <vector>
 #include <algorithm>
-#include "simpleImage.h"
+#include "SimpleImage.h"
 #include "Ray.h"
 
 class Camera {

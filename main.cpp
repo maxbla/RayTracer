@@ -4,14 +4,15 @@
 #include "Camera.h"
 #include "Sphere.h"
 #include "Plane.h"
-#include "simpleImage.h"
+#include "SimpleImage.h"
 #include "Eigen/Dense"
 #include "Eigen/Geometry"
 #include <vector>
 #include <algorithm>
 #include <time.h>
 
-  static std::vector< std::vector<double> > make2DArray (int xWidth, int yWidth, double initValue) {
+  static std::vector< std::vector<double> > make2DArray (
+    int xWidth, int yWidth, double initValue) {
     std::vector<std::vector<double> > arr(xWidth, std::vector<double>(yWidth, initValue));
     return arr;
   }
@@ -21,8 +22,8 @@ int main (void) {
   clock_t time = clock();
 
   //camera parameters
-  int xRes = 1440;
-  int yRes = 1440;
+  int xRes = 1000;
+  int yRes = 1000;
   double xHeight = 1.75;
   double yHeight = 1.75;
   double maxDist = 100.0;
@@ -65,7 +66,7 @@ int main (void) {
   for (int pixelX = 0; pixelX<xRes; pixelX++){
     for (int pixelY = 0; pixelY<yRes; pixelY++){
       Ray n = cam.ShootRay(pixelX, pixelY);
-      for (int i = 0; i<surfaces.size(); i+=1) {
+      for (size_t i = 0; i<surfaces.size(); i+=1) {
         //std::cout<<surfaces.at(i).color.r<<' '<<surfaces.at(i).color.g<<' '<<surfaces.at(i).color.b<<std::endl;
         double result = surfaces[i]->intersect(n);
         //result is positive means an intersection has happened
