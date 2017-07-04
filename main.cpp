@@ -4,16 +4,20 @@
 #include "Camera.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "AreaLight.h"
 #include "SimpleImage.h"
 #include "Eigen/Dense"
-#include "Eigen/Geometry"
 #include <vector>
 #include <algorithm>
 #include <time.h>
 
-  static std::vector< std::vector<double> > make2DArray (
-    int xWidth, int yWidth, double initValue) {
-    std::vector<std::vector<double> > arr(xWidth, std::vector<double>(yWidth, initValue));
+ 	static std::vector< std::vector<double> > make2DArray (
+		int xWidth, int yWidth, double initValue) 
+	{
+		std::vector<std::vector<double> > arr
+		(
+		xWidth, std::vector<double>(yWidth, initValue)
+		);
     return arr;
   }
 

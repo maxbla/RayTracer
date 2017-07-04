@@ -9,8 +9,8 @@ LDFLAGS = -L. -l image
 
 all: image
 
-raytracer.o: Camera.h Camera.cpp Ray.h Surface.h Sphere.h main.cpp libimage.a
-	$(CC) $(CFLAGS) -static main.cpp Camera.cpp $(LDFLAGS) -o raytracer.o
+raytracer.o: Camera.h Camera.cpp Ray.h Surface.h Sphere.h main.cpp Light.h AreaLight.h AreaLight.cpp libimage.a
+	$(CC) $(CFLAGS) -static main.cpp Camera.cpp AreaLight.cpp $(LDFLAGS) -o raytracer.o
 
 libimage.a: SimpleImage.cpp SimpleImage.h stb.cpp stb_image.h stb_image_write.h
 	$(CC) $(CFLAGS) -c SimpleImage.cpp stb.cpp
